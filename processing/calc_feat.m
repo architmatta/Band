@@ -34,19 +34,23 @@ feature(6) =suma/sumb;
 feature(7) = sum(LL);
 feature(8) = LL(2)+ LL(4);
 
-for i= 1:8;
-feature(9) = feature(9) + (LL(i)-mean_L)*(LL(i)-mean_L);
-end
+feature(9) = sum((LL - mean_L).^2);
 
-for q= 1: size(AiHn,2);
-        feature(10)=abs(AiHn(2,q)-mean_An(2));
-end
+feature(10)=sum(abs(AiHn(2,:)-mean_An(2)))/ mean_An(2);
 
-feature(10) = feature(10)/mean_An(2);
-
-feature(11)
+%feature(11)
 
 D = sum(AiHn,1)/size(AiHn,1) - (sum(AiHn(:))/numel(AiHn));
+for j= 1:size(AiHn,1)
+E(j) = D(j+1)-D(j);
+end
+t1=E(1:size(E,2)-1);
+t2=E(2:size(E,2));
+tt=t1.*t2;
+indx = find(tt<0);
+feature(11) = size(indx,2);
+
+% feature 12
 t1=D(1:size(D,2)-1);
 t2=D(2:size(D,2));
 tt=t1.*t2;
