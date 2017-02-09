@@ -37,3 +37,12 @@ feature = calc_feat(LL, AA, FF, AiHn, mask, sortvals);
 feature_test(i, :) = feature;
 end;
 %% ================= Part 2:   =============
+mahal_dist = mahal(feature_test, feature_train);
+mean_dist = sum((feature_test-repmat(mean(feature_train),4,1)).^2, 2);
+
+scatter(feature_train(:,1),feature_train(:,2))
+hold on
+scatter(Y(:,1),Y(:,2),100,d1,'*','LineWidth',2)
+hb = colorbar;
+ylabel(hb,'Mahalanobis Distance')
+legend('X','Y','Location','NW');
