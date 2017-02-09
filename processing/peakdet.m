@@ -1,4 +1,4 @@
-function [output,LL, AA, FF, AiHn, mask,sortvals] = peakdet(audiofile)
+function [output,LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile)
 %Y is sampled data and Fs is sample rate
 [Y, Fs] = audioread(audiofile, 'double');
 

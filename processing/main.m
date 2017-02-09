@@ -11,7 +11,7 @@ clear ; close all; clc
 audiofile = '..\data\vehicle040.wav';
 
 fprintf('Plotting the data....\n');
-[output,LL, AA, FF, AiHn, mask] = peakdet(audiofile);
+[output,LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile);
 
 fprintf('Program paused. Press enter to continue.\n');
 pause;

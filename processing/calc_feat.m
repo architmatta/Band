@@ -1,4 +1,4 @@
-function [feature] = calc_feat(LL, AA, FF, AiHn, mask,sortvals)
+function [feature] = calc_feat(LL, AA, FF, AiHn, mask, sortvals)
 
 sum1=0;
 count1=0;
