@@ -42,7 +42,7 @@ feature(10)=sum(abs(AiHn(2,:)-mean_An(2)))/ mean_An(2);
 
 D = sum(AiHn,1)/size(AiHn,1) - (sum(AiHn(:))/numel(AiHn));
 for j= 1:size(AiHn,1)
-E(j) = D(j+1)-D(j);
+    E(j) = D(j+1)-D(j);
 end
 t1=E(1:size(E,2)-1);
 t2=E(2:size(E,2));
@@ -71,16 +71,15 @@ temp=sum(mask,1);
 temp=temp*0.5;
 sum2=0;
 for i=1:642
-
-sum1=0;
-count1=0;
-j=1;
-while(sum1>temp(i))
-sum1=sum1+sortvals(j,i);
-j=j+1;
-count1=count1+1;
-end
-sum2=sum2+count1;
+    sum1=0;
+    count1=0;
+    j=1;
+    while(sum1>temp(i))
+        sum1=sum1+sortvals(j,i);
+        j=j+1;
+        count1=count1+1;
+    end
+    sum2=sum2+count1;
 end
 
 feature(15) = sum2;
@@ -90,16 +89,15 @@ temp=sum(mask,1);
 temp=temp*0.9;
 sum2=0;
 for i=1:642
-
-sum1=0;
-count1=0;
-j=1;
-while(sum1>temp(i))
-sum1=sum1+sortvals(j,i);
-j=j+1;
-count1=count1+1;
-end
-sum2=sum2+count1;
+    sum1=0;
+    count1=0;
+    j=1;
+    while(sum1>temp(i))
+        sum1=sum1+sortvals(j,i);
+        j=j+1;
+        count1=count1+1;
+    end
+    sum2=sum2+count1;
 end
 
 feature(16) = sum2;
