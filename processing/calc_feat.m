@@ -66,6 +66,7 @@ feature(13) = floor(norm_AiHn); %integer part of the normalized AiHn
 sum_denom14 = sum(sum(AiHn(1:4, :)));
 feature(14) = 80 * meanA / sum_denom14;
 
+%feature 15
 temp=sum(mask,1);
 temp=temp*0.5;
 sum2=0;
@@ -84,6 +85,7 @@ end
 
 feature(15) = sum2;
 
+%feature 16
 temp=sum(mask,1);
 temp=temp*0.9;
 sum2=0;
