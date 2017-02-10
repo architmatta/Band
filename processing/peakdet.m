@@ -1,7 +1,7 @@
 function [output,LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile)
 %Y is sampled data and Fs is sample rate
 [Y, Fs] = audioread(audiofile, 'double');
-
+Y = Y(:, 1);
 %L = length(Y);
 %f1 = Fs*(0:(L/2))/L;
 
@@ -11,7 +11,7 @@ wnd= hamming(nfft,'periodic');
 [S, F, T, P] = spectrogram (Y, wnd, noverlap, nfft, Fs);
 %P is spectral density of signal
 E = 10*log10(abs(P));
-mesh(T,F,E);
+%mesh(T,F,E);
 
 [sortvals, sortidx] = sort(E,1,'descend'); 
 B = zeros(size(E),'like',E); 
