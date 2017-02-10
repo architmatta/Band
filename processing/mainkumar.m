@@ -12,7 +12,7 @@ feature_test = zeros(size(sound_test, 2), 16);
 
 %% ==========Part 1: Find Feature and visualize============
 for i = 1:size(sound_train, 2)
-audiofile = sound_train(1, i);
+audiofile = sound_train(i, :);
 
 %fprintf('Plotting the data....\n');
 [output, LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile);
@@ -25,7 +25,7 @@ feature_train(i, :) = feature;
 end;
 
 for i = 1:size(sound_test, 2)
-audiofile = sound_test(1, i);
+audiofile = sound_test(i, :);
 
 %fprintf('Plotting the data....\n');
 [output, LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile);
