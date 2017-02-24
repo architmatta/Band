@@ -66,7 +66,7 @@ function [ CC, FBE, frames ] = mfcc( speech, fs, Tw, Ts, alpha, window, R, M, N,
 %           Ts = 10;           % analysis frame shift (ms)
 %           alpha = 0.97;      % preemphasis coefficient
 %           R = [ 300 3700 ];  % frequency range to consider
-%           M = 20;            % number of filterbank channels 
+%           M = 20;            % number of filterbank channels (std. is 26)
 %           C = 13;            % number of cepstral coefficients
 %           L = 22;            % cepstral sine lifter parameter
 %       

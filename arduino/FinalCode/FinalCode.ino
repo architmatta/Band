@@ -10,7 +10,7 @@ int inputPin = A0;
 int outputPin = 8;
 
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
   for (int i = 0; i < numReadings; i++) {
     readings[i] = 0;
   }
@@ -50,7 +50,7 @@ void calcavg() {
 
 
 void blinkLED() {
-  Serial.print(readings[readIndex]);
+ // Serial.print(readings[readIndex]);
   Serial.print(",");
   Serial.print(avg);
   Serial.print("\n");
@@ -60,7 +60,7 @@ void blinkLED() {
     if (readings[readIndex] > 1.7 * avg)
     {
       digitalWrite(outputPin, HIGH);
-      delay(2000);
+      delay(200);
       digitalWrite(outputPin, LOW);
 
     }

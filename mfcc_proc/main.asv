@@ -7,11 +7,10 @@
 clear ; close all; clc
 
 [sound_train] = get_horn_data();
-horn_feat = [];
 
 %% ==========Part 1: Find Feature and visualize============
 for i = 1:size(sound_train) 
-    audiofile = sound_train(i, :);
+    audiofile = sound_train(1, :);
     [sound_data, samp_freq] = audioread(audiofile, 'double');
     sound_data = sound_data(:, 1);
     frame_length = 50;
@@ -24,8 +23,8 @@ for i = 1:size(sound_train)
     L = 22; % liftering coefficient
     [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
         frame_shift, alpha, window, R, M, N, L );
-    CC = CC';
     
-    horn_feat = [horn_feat; CC];
+    horn_feat = []
+
 end
-outcome = ones(size(horn_feat, 1), 1);
+
