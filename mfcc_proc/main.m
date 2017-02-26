@@ -31,6 +31,7 @@ for i = 1:size(horn_train)
     horn_feat = [horn_feat; CC];
 end
 output = ones(size(horn_feat, 1), 1);
+horn_out = output;
 
 for i = 1:size(random_train) 
     audiofile = random_train(i, :);
