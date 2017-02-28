@@ -23,13 +23,13 @@ close all;
 mkdir('Results//'); %Directory for Storing Results
 
 %% Configurations/Parameters
-dataFileName = 'sharky.circle.points'; %sharky.linear.points - sharky.circle.points - sharky.wave.points - sharky.spirals.points
+dataFileName = 'sharky.linear.points'; %sharky.linear.points - sharky.circle.points - sharky.wave.points - sharky.spirals.points
 nbrOfNeuronsInEachHiddenLayer = [10 10]; %linear:[4] - circle:[10] - wave,spirals:[10 10]
 nbrOfOutUnits = 2;
 unipolarBipolarSelector = 0; %0 for Unipolar, -1 for Bipolar
 
 learningRate = 0.15;
-nbrOfEpochs_max = 5000;
+nbrOfEpochs_max = 500;
 
 enable_resilient_gradient_descent = 1; %1 for enable, 0 for disable
 learningRate_plus = 1.2;

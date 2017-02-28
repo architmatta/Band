@@ -7,7 +7,7 @@
 clear ; close all; clc
 
 [horn_train] = get_horn_data();
-[random_train] = get_random_data();
+[random_train] = get_silence_data();
 horn_feat = [];
 random_feat = [];
 
@@ -62,3 +62,14 @@ sound_train = [horn_feat; random_feat];
 %sound_train = shuffled_data(:, 1:20);
 %output = shuffled_data(:, 21);
 new_output = [output abs(output-1)];
+
+tot_train = [sound_train new_output];
+%feature normalization
+for i = 1:size(sound_train, 2)
+maxa(i) = max(abs(sound_train(:, i)));
+end
+for i = 1:size(sound_train, 2)
+norm_train(:, i) = sound_train(:, i)/maxa(i);
+end
+
+multi_layer_nn();

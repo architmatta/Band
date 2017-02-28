@@ -23,7 +23,7 @@ close all;
 mkdir('Results//'); %Directory for Storing Results
 
 %% Configurations/Parameters
-dataFileName = 'sharky.circle.points'; %sharky.linear.points - sharky.circle.points - sharky.wave.points - sharky.spirals.points
+dataFileName = 'sound.random.points'; %sharky.linear.points - sharky.circle.points - sharky.wave.points - sharky.spirals.points
 nbrOfNeuronsInEachHiddenLayer = [10 10]; %linear:[4] - circle:[10] - wave,spirals:[10 10]
 nbrOfOutUnits = 2;
 unipolarBipolarSelector = 0; %0 for Unipolar, -1 for Bipolar
@@ -201,64 +201,11 @@ for Epoch = 1:nbrOfEpochs_max
     end
         
     %% Visualization
-    if (zeroRMSReached || mod(Epoch,draw_each_nbrOfEpochs)==0)
-        % Draw Decision Boundary
-        unique_TargetClasses = unique(TargetClasses);
-        training_colors = {'y.', 'b.'};
-        separation_colors = {'g.', 'r.'};
-        subplot(2,1,1);
-        cla;
-        hold on;
-        title(['Decision Boundary at Epoch Number ' int2str(Epoch) '. The max number of Epochs is ' int2str(nbrOfEpochs_max) '.']);
-
-        margin = 0.05; step = 0.05;
-        xlim([min(Samples(:,2))-margin max(Samples(:,2))+margin]);
-        ylim([min(Samples(:,3))-margin max(Samples(:,3))+margin]);
-        for x = min(Samples(:,2))-margin : step : max(Samples(:,2))+margin
-            for y = min(Samples(:,3))-margin : step : max(Samples(:,3))+margin
-                outputs = EvaluateNetwork([1 x y], NodesActivations, Weights, unipolarBipolarSelector);
-                bound = (1+unipolarBipolarSelector)/2;
-                if (outputs(1) >= bound && outputs(2) < bound) %TODO: Not generic role for any number of output nodes
-                    plot(x, y, separation_colors{1}, 'markersize', 18);
-                elseif (outputs(1) < bound && outputs(2) >= bound)
-                    plot(x, y, separation_colors{2}, 'markersize', 18);
-                else
-                    if (outputs(1) >= outputs(2))
-                        plot(x, y, separation_colors{1}, 'markersize', 18);
-                    else
-                        plot(x, y, separation_colors{2}, 'markersize', 18);
-                    end
-                end
-            end
-        end
-
-        for i = 1:length(unique_TargetClasses)
-            points = Samples(TargetClasses==unique_TargetClasses(i), 2:end);
-            plot(points(:,1), points(:,2), training_colors{i}, 'markersize', 10);
-        end
-        axis equal;
-
-        % Draw Mean Square Error
-        subplot(2,1,2);
-        MSE(MSE==-1) = [];
-        plot([MSE(1:Epoch)]);
-        ylim([-0.1 0.6]);
-        title('Mean Square Error');
-        xlabel('Epochs');
-        ylabel('MSE');
-        grid on;
-
-        saveas(gcf, sprintf('Results//fig%i.png', Epoch),'jpg');
-        pause(0.05);
-    end
+    
     display([int2str(Epoch) ' Epochs done out of ' int2str(nbrOfEpochs_max) ' Epochs. MSE = ' num2str(MSE(Epoch)) ' Learning Rate = ' ...
         num2str(learningRate) '.']);
     
     nbrOfEpochs_done = Epoch;
-    if (zeroRMSReached)
-        saveas(gcf, sprintf('Results//Final Result for %s.png', dataFileName),'jpg');
-        break;
-    end
     
 end
 display(['Mean Square Error = ' num2str(MSE(nbrOfEpochs_done)) '.']);
