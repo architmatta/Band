@@ -7,7 +7,7 @@
 clear ; close all; clc
 
 [horn_train] = get_horn_data();
-[random_train] = get_random_data();
+[random_train] = get_silence_data();
 horn_feat = [];
 random_feat = [];
 
