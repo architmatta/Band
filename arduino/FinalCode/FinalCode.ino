@@ -10,7 +10,7 @@ int inputPin = A0;
 int outputPin = 8;
 
 void setup() {
-  Serial.begin(115200);
+  Serial.begin(9600);
   for (int i = 0; i < numReadings; i++) {
     readings[i] = 0;
   }
@@ -22,7 +22,7 @@ void setup() {
 
 void loop() {
   readings[readIndex] = analogRead(inputPin);
-  // Serial.print(readings[readIndex]);
+  Serial.print(readings[readIndex]);
   // Serial.print(",");
 
   calcavg();

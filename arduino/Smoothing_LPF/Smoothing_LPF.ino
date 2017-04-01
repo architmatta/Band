@@ -10,7 +10,7 @@ int readIndex = 1;
 float Beta1 = 0.0625; //dec it to inc smoothness
 int Beta2 = 4;
 
-int inputPin = A0;
+int inputPin = A2;
 int outputPin = 13;
 
 void setup() {

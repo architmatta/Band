@@ -6,44 +6,96 @@
 %% Initialization
 clear ; close all; clc
 
-[sound_train, sound_test] = get_data();
-feature_train = zeros(size(sound_train, 1), 16);
-feature_test = zeros(size(sound_test, 1), 16);
+[horn_train] = get_horn_data();
+[silence_train] = get_silence_data();
+[cry_train] = get_cry_data();
+
+horn_feat = [];
+silence_feat = [];
+cry_feat = [];
+
+horn_out = [];
+silence_out = [];
+cry_out = [];
+
+frame_length = 50;
+frame_shift = 25;
+alpha = 0.97;
+window = @hanning;
+R = [300 5000]; %frequency range
+M = 26; % number of filterbank channels
+N = 20; % number of mfcc
+L = 22; % liftering coefficient
 
 %% ==========Part 1: Find Feature and visualize============
-for i = 1:size(sound_train, 1)
-audiofile = sound_train(i, :);
-tic
-%fprintf('Plotting the data....\n');
-[output, LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile);
+for i = 1:size(horn_train)
+   audiofile = horn_train(i,:);
+   [sound_data, samp_freq] = audioread(audiofile, 'double');
+   sound_data = sound_data(:, 1); %only data in 1st column
+   [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
+        frame_shift, alpha, window, R, M, N, L );
+    CC = CC';
+    CC = CC(1:8,:);
+    CC = CC(:);
+    CC = CC';
+    
+    horn_feat = [horn_feat; CC];
+    horn_out = [horn_out; 1];
+    silence_out = [silence_out; 0];
+    cry_out = [cry_out; 0];
+end
 
-%fprintf('Program paused. Press enter to continue.\n');
-%pause;
+output1 = ones(size(horn_feat, 1), 1);
 
-feature = calc_feat(LL, AA, FF, AiHn, mask, sortvals);
-feature_train(i, :) = real(feature);
-t(i) = toc
-end;
+for i = 1:size(silence_train) 
+    audiofile = silence_train(i, :);
+    [sound_data, samp_freq] = audioread(audiofile, 'double');
+    sound_data = sound_data(:, 1);
+    [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
+        frame_shift, alpha, window, R, M, N, L );
+    CC = CC';
+    CC = CC(1:8,:);
+    CC = CC(:);
+    CC = CC';
+    
+    silence_feat = [silence_feat; CC];
+    horn_out = [horn_out; 0];
+    silence_out = [silence_out; 1];
+    cry_out = [cry_out; 0];
+end
+out1= ones(size(horn_feat, 1), 1);
+for i = 1:size(silence_feat, 1)
+    output1 = [output1; 0];
+end
 
-for i = 1:size(sound_test, 1)
-audiofile = sound_test(i, :);
+for i = 1:size(cry_train)
+   audiofile = cry_train(i,:);
+   [sound_data, samp_freq] = audioread(audiofile, 'double');
+   sound_data = sound_data(:, 1); %only data in 1st column
+   [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
+        frame_shift, alpha, window, R, M, N, L );
+    CC = CC';
+    CC = CC(1:8,:);
+    CC = CC(:);
+    CC = CC';
+    
+    cry_feat = [cry_feat; CC];
+    horn_out = [horn_out; 0];
+    silence_out = [silence_out; 0];
+    cry_out = [cry_out; 1];
+end
+%% ====================== final ==============================
 
-%fprintf('Plotting the data....\n');
-[output, LL, AA, FF, AiHn, mask, sortvals] = peakdet(audiofile);
+%all features
+sound_train = [horn_feat; silence_feat; cry_feat];
+%feature normalization
+for i = 1:size(sound_train, 2)
+maxa(i) = max(abs(sound_train(:, i)));
+end
+for i = 1:size(sound_train, 2)
+norm_train(:, i) = sound_train(:, i)/maxa(i);
+end
 
-%fprintf('Program paused. Press enter to continue.\n');
-%pause;
+new_output = [output1 abs(output1-1)];
+final_output = [horn_out silence_out cry_out];
 
-feature = calc_feat(LL, AA, FF, AiHn, mask, sortvals);
-feature_test(i, :) = real(feature);
-end;
-%% ================= Part 2:   =============
-mahal_dist = mahal(feature_test, feature_train);
-%mean_dist = sum((feature_test-repmat(mean(feature_train),4,1)).^2, 2);
-
-%scatter(feature_train(:,1),feature_train(:,2))
-%hold on
-%scatter(Y(:,1),Y(:,2),100,d1,'*','LineWidth',2)
-%hb = colorbar;
-%ylabel(hb,'Mahalanobis Distance')
-%legend('X','Y','Location','NW');
