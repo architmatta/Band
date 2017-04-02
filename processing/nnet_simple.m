@@ -4,10 +4,10 @@
 %
 % This script assumes these variables are defined:
 %
-%   norm_train - input data.
+%   sound_train - input data.
 %   new_output - target data.
 
-x = norm_train';
+x = sound_train';
 t = final_output';
 
 % Choose a Training Function
