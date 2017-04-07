@@ -1,11 +1,8 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% This is the main file to run the whole process
+% This is the main file to calculate the feature
 %This file is meant to process the data and find features
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%% Initialization
-clear ; close all; clc
-
+function [sound_train, final_output] = main()
 [horn_train] = get_horn_data();
 [silence_train] = get_silence_data();
 [cry_train] = get_cry_data();
@@ -88,14 +85,9 @@ end
 
 %all features
 sound_train = [horn_feat; silence_feat; cry_feat];
-%feature normalization
-for i = 1:size(sound_train, 2)
-maxa(i) = max(abs(sound_train(:, i)));
-end
-for i = 1:size(sound_train, 2)
-norm_train(:, i) = sound_train(:, i)/maxa(i);
-end
 
 new_output = [output1 abs(output1-1)];
 final_output = [horn_out silence_out cry_out];
+
+end
 

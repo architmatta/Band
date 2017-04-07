@@ -6,7 +6,7 @@
 %
 %   sound_train - input data.
 %   new_output - target data.
-
+function[net] = nnet_simple(sound_train, final_output)
 x = sound_train';
 t = final_output';
 
@@ -47,4 +47,7 @@ view(net)
 %figure, ploterrhist(e)
 %figure, plotconfusion(t,y)
 %figure, plotroc(t,y)
+
+end
+
 
