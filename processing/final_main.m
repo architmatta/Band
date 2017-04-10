@@ -16,9 +16,13 @@ pause;
 net = nnet_simple(sound_train, train_output);
 
 fprintf('Well! Network is trained.\n');
-fprintf('Now enter file path you want to test it on.\n');
-audiofile = input('File:', 's');
+temp = 1;
+while(temp>0)
+    fprintf('Now enter file path you want to test it on.\n');
+    audiofile = input('File:', 's');
 
-[output, tym] = full_sound_file(audiofile, net);
-
-fprintf('The tym array contains time at which horn is present.\n');
+    [output, tym] = full_sound_file(audiofile, net);
+    fprintf('The tym array contains time at which horn is present.\n');
+    temp = input('Want to test another? Be positive if you do.>>', 's');
+    temp = str2double(temp);
+end

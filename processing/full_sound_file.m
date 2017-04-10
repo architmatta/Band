@@ -13,6 +13,7 @@ N = 20; % number of mfcc
 L = 22; % liftering coefficient
 
 [sound_data, samp_freq] = audioread(audiofile, 'double');
+time_sound = [1/samp_freq:1/samp_freq:length(sound_data)/samp_freq];
 sound_data = sound_data(:, 1); %only data in 1st column
 [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
     frame_shift, alpha, window, R, M, N, L );
@@ -37,10 +38,20 @@ end
 out = out';
 
 y = out(:, 1) > 0.75;
-a = [1:length(y)];
+a = 1:length(y);
 a = a';
 a = a.*y;
 a = a*250;
 a = nonzeros(a);
 a = a/1000;
+
+fig = figure;
+hax = axes;
+hold on
+plot(time_sound, sound_data)
+for i = 1:length(a)
+    horn_time = a(i);
+    line([horn_time horn_time], [-1 1], 'Color', [1 0 0])
+end
+
 end
