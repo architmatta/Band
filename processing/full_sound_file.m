@@ -1,7 +1,7 @@
 %file to analyse any sound file of any length and give the output of
 % net for each interval
 
-function [out, a] = full_sound_file(audiofile, net)
+function [out, a] = full_sound_file(audiofile, net, mean_train, dev_train)
 
 frame_length = 50;
 frame_shift = 25;
@@ -27,6 +27,10 @@ for i = 0:files
     temp1 = CC((i*8+1):(i*8+8), :);
     temp1 = temp1(:)';
     files_feat = [files_feat; temp1];
+end
+
+for i = 1:size(files_feat)
+    files_feat(i, :) = (files_feat(i, :)-mean_train(1, :))./dev_train;
 end
 
 out = [];

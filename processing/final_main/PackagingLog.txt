@@ -1,0 +1,27 @@
+ant:
+<ant>
+  <mkdir dir="C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_redistribution" />
+  <mkdir dir="C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_testing" />
+  <mkdir dir="C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_redistribution_files_only" />
+</ant>
+mcc -C -o final_main -W WinMain:final_main -T link:exe -d C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_testing -v C:\Users\ayush\Documents\GitHub\Band\processing\final_main.m 
+Compiler version: 6.0 (R2015a)
+Dependency analysis by REQUIREMENTS.
+[Warning: Adding path "C:\Users\ayush\Documents\GitHub\Band\processing" to
+Compiler path instance.] 
+Parsing file "C:\Users\ayush\Documents\GitHub\Band\processing\final_main.m"
+	(Referenced from: "Compiler Command Line").
+Deleting 4 temporary MEX authorization files.
+Removing: 'C:\Users\ayush\AppData\Local\Temp\mathworks_tmp_025bc12911_9660.auth'.
+Removing: 'C:\Users\ayush\AppData\Local\Temp\mathworks_tmp_025bc4382_9660.auth'.
+Removing: 'C:\Users\ayush\AppData\Local\Temp\mathworks_tmp_025bc2024_9660.auth'.
+Removing: 'C:\Users\ayush\AppData\Local\Temp\mathworks_tmp_025bc32566_9660.auth'.
+Generating file "C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_testing\readme.txt".
+Packaging...
+Adding custom icon C:\Program Files\MATLAB\MATLAB Production Server\R2015a\toolbox\compiler\Resources\default_icon.ico to C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_testing\final_main.exe.
+Attempting to embed the CTF archive into the application C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_testing\final_main.exe.
+Finished embedding CTF archive. Deleting the external CTF archive.
+Creating the bundle...
+Web based installer created at C:\Users\ayush\Documents\GitHub\Band\processing\final_main\for_redistribution\MyAppInstaller_web.exe.
+Packaging complete.
+Elapsed packaging time was: 7 minutes and 12 seconds.

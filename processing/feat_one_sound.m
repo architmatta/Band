@@ -1,4 +1,4 @@
-function[feat_audio] = feat_one_sound(audiofile)
+function[feat_audio] = feat_one_sound(audiofile, mean_train, dev_train)
 
 frame_length = 50;
 frame_shift = 25;
@@ -10,14 +10,16 @@ N = 20; % number of mfcc
 L = 22; % liftering coefficient
 
 [sound_data, samp_freq] = audioread(audiofile, 'double');
-   sound_data = sound_data(:, 1); %only data in 1st column
-   [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
-        frame_shift, alpha, window, R, M, N, L );
-    CC = CC';
-    CC = CC(1:8,:);
-    CC = CC(:);
-    CC = CC';
-    
-    feat_audio = CC;
+sound_data = sound_data(:, 1); %only data in 1st column
+[ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
+    frame_shift, alpha, window, R, M, N, L );
+CC = CC';
+CC = CC(1:8,:);
+CC = CC(:);
+CC = CC';
+
+feat_audio = CC;
+
+feat_audio = (feat_audio - mean_train)./dev_train;
 
 end
