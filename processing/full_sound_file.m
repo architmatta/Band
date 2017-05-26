@@ -1,16 +1,7 @@
 %file to analyse any sound file of any length and give the output of
 % net for each interval
 
-function [out, a] = full_sound_file(audiofile, net, mean_train, dev_train)
-
-frame_length = 50;
-frame_shift = 25;
-alpha = 0.97;
-window = @hanning;
-R = [300 5000]; %frequency range
-M = 26; % number of filterbank channels
-N = 20; % number of mfcc
-L = 22; % liftering coefficient
+function [out, a] = full_sound_file(audiofile, net, mean_train, dev_train,frame_length, frame_shift, alpha, window, R, M, N, L)
 
 [sound_data, samp_freq] = audioread(audiofile, 'double');
 time_sound = [1/samp_freq:1/samp_freq:length(sound_data)/samp_freq];
@@ -18,6 +9,9 @@ sound_data = sound_data(:, 1); %only data in 1st column
 [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
     frame_shift, alpha, window, R, M, N, L );
 CC = CC';
+%CC = CC(1:8,:);
+%CC = CC(:);
+%CC = CC';
 
 num_row = size(CC, 1);
 files = floor(num_row/8) - 1;
@@ -42,6 +36,7 @@ end
 out = out';
 
 y = out(:, 1) > 0.75;
+%y = out(:, 3) > 0.75;
 a = 1:length(y);
 a = a';
 a = a.*y;

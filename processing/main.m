@@ -2,7 +2,7 @@
 % This is the main file to calculate the feature
 %This file is meant to process the data and find features
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [sound_train, final_output] = main()
+function [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L)
 [horn_train] = get_horn_data();
 [silence_train] = get_silence_data();
 [cry_train] = get_cry_data();
@@ -15,20 +15,12 @@ horn_out = [];
 silence_out = [];
 cry_out = [];
 
-frame_length = 50;
-frame_shift = 25;
-alpha = 0.97;
-window = @hanning;
-R = [300 5000]; %frequency range
-M = 26; % number of filterbank channels
-N = 20; % number of mfcc
-L = 22; % liftering coefficient
-
 %% ==========Part 1: Find Feature and visualize============
 for i = 1:size(horn_train)
    audiofile = horn_train(i,:);
-   [sound_data, samp_freq] = audioread(audiofile, 'double');
+   [sound_data, samp_freq] = audioread(audiofile, 'native');
    sound_data = sound_data(:, 1); %only data in 1st column
+   %sound_data = sound_data(1:samp_freq/4);
    [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
         frame_shift, alpha, window, R, M, N, L );
     CC = CC';
@@ -48,7 +40,8 @@ for i = 1:size(silence_train)
     audiofile = silence_train(i, :);
     [sound_data, samp_freq] = audioread(audiofile, 'double');
     sound_data = sound_data(:, 1);
-    [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
+    %sound_data = sound_data(1:samp_freq/4);
+   [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
         frame_shift, alpha, window, R, M, N, L );
     CC = CC';
     CC = CC(1:8,:);
@@ -67,8 +60,9 @@ end
 
 for i = 1:size(cry_train)
    audiofile = cry_train(i,:);
-   [sound_data, samp_freq] = audioread(audiofile, 'double');
+   [sound_data, samp_freq] = audioread(audiofile, 'native');
    sound_data = sound_data(:, 1); %only data in 1st column
+   %sound_data = sound_data(1:samp_freq/4);
    [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
         frame_shift, alpha, window, R, M, N, L );
     CC = CC';

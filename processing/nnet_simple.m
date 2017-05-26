@@ -6,7 +6,7 @@
 %
 %   sound_train - input data.
 %   new_output - target data.
-function[net] = nnet_simple(sound_train, final_output)
+function[net, performance] = nnet_simple(sound_train, final_output)
 x = sound_train';
 t = final_output';
 
@@ -26,6 +26,18 @@ net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
 net.divideParam.testRatio = 15/100;
 
+net.divideFcn = 'divideind';
+
+trainFile = matfile('trainInd.mat');
+valFile = matfile('valInd.mat');
+testFile = matfile('testInd.mat');
+
+net.divideParam.trainInd = trainFile.trainInd;
+net.divideParam.valInd = valFile.valInd;
+net.divideParam.testInd = testFile.testInd;
+
+net.trainParam.lr = 0.0001;
+
 % Train the Network
 [net,tr] = train(net,x,t);
 
@@ -38,7 +50,7 @@ yind = vec2ind(y);
 percentErrors = sum(tind ~= yind)/numel(tind);
 
 % View the Network
-view(net)
+%view(net)
 
 % Plots
 % Uncomment these lines to enable various plots.

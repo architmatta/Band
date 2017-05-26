@@ -118,13 +118,13 @@ function [ CC, FBE, frames ] = mfcc( speech, fs, Tw, Ts, alpha, window, R, M, N,
     if( nargin~= 10 ), help mfcc; return; end; 
 
     % Explode samples to the range of 16 bit shorts
-    if( max(abs(speech))<=1 ), speech = speech * 2^15; end;
+    %if( max(abs(speech))<=1 ), speech = speech * 2^15; end;
 
-    Nw = round( 1E-3*Tw*fs );    % frame duration (samples)
-    Ns = round( 1E-3*Ts*fs );    % frame shift (samples)
+    Nw = round( 1E-3*Tw*fs ); %---Nw=2400   % frame duration (samples)
+    Ns = round( 1E-3*Ts*fs ); %---Ns=1200   % frame shift (samples)
 
-    nfft = 2^nextpow2( Nw );     % length of FFT analysis 
-    K = nfft/2+1;                % length of the unique part of the FFT 
+    nfft = 2^nextpow2( Nw ); %nfft=4096    % length of FFT analysis 
+    K = nfft/2+1;   %---K=2049         % length of the unique part of the FFT 
 
 
     %% HANDY INLINE FUNCTION HANDLES
@@ -145,7 +145,7 @@ function [ CC, FBE, frames ] = mfcc( speech, fs, Tw, Ts, alpha, window, R, M, N,
     %% FEATURE EXTRACTION 
 
     % Preemphasis filtering (see Eq. (5.1) on p.73 of [1])
-    speech = filter( [1 -alpha], 1, speech ); % fvtool( [1 -alpha], 1 );
+    speech = filter( [1 -alpha], 1, double(speech) ); % fvtool( [1 -alpha], 1 );
 
     % Framing and windowing (frames as columns)
     frames = vec2frames( speech, Nw, Ns, 'cols', window, false );
