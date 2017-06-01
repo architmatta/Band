@@ -6,9 +6,11 @@
 %
 %   sound_train - input data.
 %   final_output - target data.
-function[net, tr] = nnet_simple(sound_train, final_output)
+function[net, tr] = nnet_simple(sound_train, final_output, hidden_node)
 x = sound_train';
 t = final_output';
+
+hidden_node = floor(hidden_node*size(x, 1));
 
 % Choose a Training Function
 % For a list of all training functions type: help nntrain
@@ -18,7 +20,7 @@ t = final_output';
 trainFcn = 'trainscg';  % Scaled conjugate gradient backpropagation.
 
 % Create a Pattern Recognition Network
-hiddenLayerSize = 80;
+hiddenLayerSize = hidden_node;
 net = patternnet(hiddenLayerSize);
 
 % Setup Division of Data for Training, Validation, Testing

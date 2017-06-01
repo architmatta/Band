@@ -9,6 +9,8 @@ M = 26; % number of filterbank channels
 N = 20; % number of mfcc
 L = 22; % liftering coefficient
 
+sheet = 'SameVal5Parallel3';
+
 frame_len_vec = [];
 frame_shift_vec = [];
 alpha_vec = [];
@@ -26,7 +28,7 @@ time_train_vec = [];
 time_feat_vec = [];
 
 
-for j = 1:20
+for j = 1:30
     fprintf('%d iteration \n', j);
     tic
     [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L);
@@ -70,20 +72,20 @@ for j = 1:20
     time_train_vec = [time_train_vec; time_train];
 end
 
-xlswrite('SamplingData1.xlsx', frame_len_vec, 'Sheet1', strcat('A2:A', int2str(length(frame_len_vec))));
-xlswrite('SamplingData1.xlsx', frame_shift_vec, 'Sheet1',strcat('B2:B', int2str(length(frame_shift_vec))));
-xlswrite('SamplingData1.xlsx', alpha_vec, 'Sheet1',strcat('C2:C', int2str(length(alpha_vec))));
-xlswrite('SamplingData1.xlsx', M_vec, 'Sheet1',strcat('D2:D', int2str(length(M_vec))));
-xlswrite('SamplingData1.xlsx', N_vec, 'Sheet1',strcat('E2:E', int2str(length(N_vec))));
-xlswrite('SamplingData1.xlsx', L_vec, 'Sheet1',strcat('F2:F', int2str(length(L_vec))));
-xlswrite('SamplingData1.xlsx', num_input_vec, 'Sheet1',strcat('G2:G', int2str(length(num_input_vec))));
-xlswrite('SamplingData1.xlsx', num_hidden_vec, 'Sheet1',strcat('H2:H', int2str(length(num_hidden_vec))));
-xlswrite('SamplingData1.xlsx', num_output_vec, 'Sheet1',strcat('I2:I', int2str(length(num_output_vec))));
+xlswrite('SamplingData3.xlsx', frame_len_vec, sheet, strcat('A2:A', int2str(length(frame_len_vec)+1)));
+xlswrite('SamplingData3.xlsx', frame_shift_vec, sheet,strcat('B2:B', int2str(length(frame_shift_vec)+1)));
+xlswrite('SamplingData3.xlsx', alpha_vec, sheet,strcat('C2:C', int2str(length(alpha_vec)+1)));
+xlswrite('SamplingData3.xlsx', M_vec, sheet,strcat('D2:D', int2str(length(M_vec)+1)));
+xlswrite('SamplingData3.xlsx', N_vec, sheet,strcat('E2:E', int2str(length(N_vec)+1)));
+xlswrite('SamplingData3.xlsx', L_vec, sheet,strcat('F2:F', int2str(length(L_vec)+1)));
+xlswrite('SamplingData3.xlsx', num_input_vec, sheet,strcat('G2:G', int2str(length(num_input_vec)+1)));
+xlswrite('SamplingData3.xlsx', num_hidden_vec, sheet,strcat('H2:H', int2str(length(num_hidden_vec)+1)));
+xlswrite('SamplingData3.xlsx', num_output_vec, sheet,strcat('I2:I', int2str(length(num_output_vec)+1)));
 
 
-xlswrite('SamplingData1.xlsx', msre_train, 'Sheet1',strcat('J2:J', int2str(length(msre_train))));
-xlswrite('SamplingData1.xlsx', msre_val, 'Sheet1',strcat('K2:K', int2str(length(msre_val))));
-xlswrite('SamplingData1.xlsx', msre_test, 'Sheet1',strcat('L2:L', int2str(length(msre_test))));
-xlswrite('SamplingData1.xlsx', epoch_vec, 'Sheet1',strcat('M2:M', int2str(length(epoch_vec))));
-xlswrite('SamplingData1.xlsx', time_feat_vec, 'Sheet1',strcat('N2:N', int2str(length(time_feat_vec))));
-xlswrite('SamplingData1.xlsx', time_train_vec, 'Sheet1',strcat('O2:O', int2str(length(time_train_vec))));
+xlswrite('SamplingData3.xlsx', msre_train, sheet,strcat('J2:J', int2str(length(msre_train)+1)));
+xlswrite('SamplingData3.xlsx', msre_val, sheet,strcat('K2:K', int2str(length(msre_val)+1)));
+xlswrite('SamplingData3.xlsx', msre_test, sheet,strcat('L2:L', int2str(length(msre_test)+1)));
+xlswrite('SamplingData3.xlsx', epoch_vec, sheet,strcat('M2:M', int2str(length(epoch_vec)+1)));
+xlswrite('SamplingData3.xlsx', time_feat_vec, sheet,strcat('N2:N', int2str(length(time_feat_vec)+1)));
+xlswrite('SamplingData3.xlsx', time_train_vec, sheet,strcat('O2:O', int2str(length(time_train_vec)+1)));

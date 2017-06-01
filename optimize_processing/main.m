@@ -16,14 +16,14 @@ silence_out = [];
 cry_out = [];
 
 
-tot_num_feat = (((3000-frame_length)/frame_shift) + 1)*N;
+tot_num_feat = floor((((3000-frame_length)/frame_shift) + 1))*N;
+
 %% ==========Part 1: Find Feature and visualize============
 for i = 1:size(horn_train)
    fprintf('Feature Extraction in Horn File : %d\n', i);
    audiofile = horn_train(i,:);
    [sound_data, samp_freq] = audioread(audiofile, 'double');
    sound_data = sound_data(:, 1); %only data in 1st column
-   %sound_data = sound_data(1:samp_freq/4);
    [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
         frame_shift, alpha, window, R, M, N, L );
     CC = CC(1:tot_num_feat);
