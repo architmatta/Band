@@ -16,7 +16,7 @@ epoch_vec = [];
 time_train_vec = [];
 time_feat_vec = [];
 
-for j = 1:10
+for j = 1:30
     fprintf('%d iteration in %s\n', j, TAG);
     tic
     [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
