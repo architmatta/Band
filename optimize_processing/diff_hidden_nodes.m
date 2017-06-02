@@ -9,6 +9,7 @@ M = 26; % number of filterbank channels
 N = 20; % number of mfcc
 L = 22; % liftering coefficient
 
+%{
 frame_len_vec_mean = [];
 frame_shift_vec_mean = [];
 alpha_vec_mean = [];
@@ -24,19 +25,20 @@ msre_test_mean = [];
 epoch_vec_mean = [];
 time_train_vec_mean = [];
 time_feat_vec_mean = [];
+%}
 
 %set_frame_length = [50; 100; 300; 600; 1200; 1500];
 %set_frame_shift = [25; 50; 75; 100]; %It's shift and not overlap. 100 means no overlap for frame_length 1000
-set_hidden_node = [0.25; 0.50; 0.75];
+set_hidden_node = [1; 2; 3];
 
 for i = 1:length(set_hidden_node)
     hidden_node = set_hidden_node(i);
     sheet = strcat('HiddenNodes', int2str(i));
     
-    [mean_frame_length, mean_frame_shift, mean_alpha, mean_M, mean_N,...
-    mean_L, mean_input, mean_hidden, mean_output, mean_msre_train, mean_msre_val, mean_msre_test, mean_epoch, mean_time_feat, ...
-    mean_time_train] = repeat_same_param(frame_length, frame_shift, alpha, window, R, M, N, L, sheet, hidden_node);
+    repeat_same_param(frame_length, frame_shift, alpha, window, R, M, N, L, sheet, hidden_node);
 
+
+%{
     frame_len_vec_mean = [frame_len_vec_mean; mean_frame_length];
     frame_shift_vec_mean = [frame_shift_vec_mean; mean_frame_shift];
     alpha_vec_mean = [alpha_vec_mean; mean_alpha];
@@ -52,8 +54,9 @@ for i = 1:length(set_hidden_node)
     epoch_vec_mean = [epoch_vec_mean; mean_epoch];
     time_train_vec_mean = [time_train_vec_mean; mean_time_feat];
     time_feat_vec_mean = [time_feat_vec_mean; mean_time_train];  
+    %}
 end
-
+%{
 
 xlswrite('SamplingData1.xlsx', frame_len_vec_mean, 'DifferentHiddenNodes', strcat('A2:A', int2str(length(frame_len_vec_mean)+1)));
 xlswrite('SamplingData1.xlsx', frame_shift_vec_mean, 'DifferentHiddenNodes',strcat('B2:B', int2str(length(frame_shift_vec_mean)+1)));
@@ -72,5 +75,5 @@ xlswrite('SamplingData1.xlsx', msre_test_mean, 'DifferentHiddenNodes',strcat('L2
 xlswrite('SamplingData1.xlsx', epoch_vec_mean, 'DifferentHiddenNodes',strcat('M2:M', int2str(length(epoch_vec_mean)+1)));
 xlswrite('SamplingData1.xlsx', time_train_vec_mean, 'DifferentHiddenNodes',strcat('N2:N', int2str(length(time_train_vec_mean)+1)));
 xlswrite('SamplingData1.xlsx', time_feat_vec_mean, 'DifferentHiddenNodes',strcat('O2:O', int2str(length(time_feat_vec_mean)+1)));
-
+%}
 

@@ -2,7 +2,7 @@
 % This is the main file to calculate the feature
 %This file is meant to process the data and find features
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-function [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L)
+function [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG)
 [horn_train] = get_horn_data();
 [silence_train] = get_silence_data();
 [cry_train] = get_cry_data();
@@ -20,7 +20,7 @@ tot_num_feat = floor((((3000-frame_length)/frame_shift) + 1))*N;
 
 %% ==========Part 1: Find Feature and visualize============
 for i = 1:size(horn_train)
-   fprintf('Feature Extraction in Horn File : %d\n', i);
+   fprintf('%s Feature Extraction in Horn File : %d\n', TAG, i);
    audiofile = horn_train(i,:);
    [sound_data, samp_freq] = audioread(audiofile, 'double');
    sound_data = sound_data(:, 1); %only data in 1st column
@@ -39,7 +39,7 @@ end
 output1 = ones(size(horn_feat, 1), 1);
 
 for i = 1:size(silence_train) 
-    fprintf('Feature Extraction in Ambience File : %d\n', i);
+    fprintf('%s Feature Extraction in Ambience File : %d\n', TAG, i);
     audiofile = silence_train(i, :);
     [sound_data, samp_freq] = audioread(audiofile, 'double');
     sound_data = sound_data(:, 1);
@@ -61,7 +61,7 @@ for i = 1:size(silence_feat, 1)
 end
 
 for i = 1:size(cry_train)
-   fprintf('Feature Extraction in Cry File : %d\n', i);
+   fprintf('%s Feature Extraction in Cry File : %d\n', TAG, i);
    audiofile = cry_train(i,:);
    [sound_data, samp_freq] = audioread(audiofile, 'double');
    sound_data = sound_data(:, 1); %only data in 1st column

@@ -10,6 +10,8 @@ function[net, tr] = nnet_simple(sound_train, final_output, hidden_node)
 x = sound_train';
 t = final_output';
 
+hidden_node = floor(hidden_node*size(x, 1));
+
 % Choose a Training Function
 % For a list of all training functions type: help nntrain
 % 'trainlm' is usually fastest.
@@ -29,11 +31,12 @@ net.divideParam.testRatio = 15/100;
 net.divideFcn = 'dividerand';
 
 net.trainParam.lr = 0.0001;
-net.trainParam.showWindow = 0;
 
 load seed
 rng(seed)
-net = configure(net,x,t);
+
+Iw = rand(size(x, 2))
+
 % Train the Network
 [net,tr] = train(net,x,t);
 
