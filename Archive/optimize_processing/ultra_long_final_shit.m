@@ -15,15 +15,20 @@ set_mfcc = [5; 8; 10; 12; 15; 18; 20];
 set_hidden_node = [0.1; 0.25; 0.50; 0.75; 1.0];
 
 for i = 1:length(set_hidden_node)
-    frame_length = set_frame_length(i);
     for j = 1:length(set_frame_shift)
-        frame_shift = floor(set_frame_shift(j)*frame_length);
         for k = 1:length(set_mfcc)
-            N = set_mfcc(i);
-            for l = 1:length(set_hidden_nodes)
-                hidden_node = set_hidden_node(i);
+            for l = 1:length(set_hidden_node)
+                %frame_length = set_frame_length(i);
+                %frame_shift = floor(set_frame_shift(j)*frame_length);
+                %hidden_node = set_hidden_node(l);
+                %N = set_mfcc(k);
+                frame_length = set_frame_length(2);
+                frame_shift = floor(set_frame_shift(4)*frame_length);
+                hidden_node = set_hidden_node(3);
+                N = set_mfcc(2);
                 sheet = strcat('FinalSheets', int2str(i), int2str(j), int2str(k), int2str(l));
                 TAG = strcat(int2str(i), int2str(j), int2str(k), int2str(l));
+                %repeat_same_param(frame_length, frame_shift, alpha, window, R, M, N, L, sheet, hidden_node, TAG);
                 repeat_same_param(frame_length, frame_shift, alpha, window, R, M, N, L, sheet, hidden_node, TAG);
             end
         end

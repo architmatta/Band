@@ -16,12 +16,14 @@ epoch_vec = [];
 time_train_vec = [];
 time_feat_vec = [];
 
-for j = 1:30
+fprintf('%d, %d, %d, %f', frame_length, frame_shift, N, hidden_node);
+
+for j = 1:5
     fprintf('%d iteration in %s\n', j, TAG);
     tic
     [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
     time_feat = toc;
-    hidden = size(sound_train, 2)*hidden_node;
+    hidden = floor(size(sound_train, 2)*hidden_node);
     tic
     [net, tr] = nnet_simple(sound_train, final_output, hidden);
     time_train = toc;
