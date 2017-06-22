@@ -20,7 +20,7 @@ time_feat_vec = [];
 
 fprintf('%d, %d, %d, %f', frame_length, frame_shift, N, hidden_node);
 
-for j = 1:5
+for j = 1
     fprintf('%d iteration in %s\n', j, TAG);
     tic
     [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
