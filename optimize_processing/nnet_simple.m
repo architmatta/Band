@@ -6,7 +6,7 @@
 %
 %   sound_train - input data.
 %   final_output - target data.
-function[net, tr] = nnet_simple(sound_train, final_output, hidden_node)
+function[net, tr, percentErrors] = nnet_simple(sound_train, final_output, hidden_node)
 x = sound_train';
 t = final_output';
 
@@ -30,6 +30,8 @@ net.divideFcn = 'dividerand';
 
 net.trainParam.lr = 0.0001;
 net.trainParam.showWindow = 0;
+%net.trainParam.min_grad = 1e-5;
+net.trainParam.goal = 0.1;
 
 load seed
 rng(seed)
@@ -40,7 +42,7 @@ net = configure(net,x,t);
 % Test the Network
 y = net(x);
 e = gsubtract(t,y);
-performance = perform(net,t,y)
+performance = perform(net,t,y);
 tind = vec2ind(t);
 yind = vec2ind(y);
 percentErrors = sum(tind ~= yind)/numel(tind);

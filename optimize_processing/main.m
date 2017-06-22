@@ -19,9 +19,12 @@ cry_out = [];
 tot_num_feat = floor((((3000-frame_length)/frame_shift) + 1))*N;
 
 %% ==========Part 1: Find Feature and visualize============
-for i = 1:size(horn_train)
-   fprintf('%s Feature Extraction in Horn File : %d\n', TAG, i);
+for i = 1:600%size(horn_train)
+   fprintf('%sFeature Extraction in Horn File : %d\n', TAG, i);
    audiofile = horn_train(i,:);
+   index = strfind(audiofile, 'v');
+   audiofile = audiofile(1:index);
+  % fprintf('%s%dHey', audiofile, length(audiofile));
    [sound_data, samp_freq] = audioread(audiofile, 'double');
    sound_data = sound_data(:, 1); %only data in 1st column
    [ CC, FBE, frames ] = mfcc( sound_data, samp_freq, frame_length,...
@@ -41,6 +44,8 @@ output1 = ones(size(horn_feat, 1), 1);
 for i = 1:size(silence_train) 
     fprintf('%s Feature Extraction in Ambience File : %d\n', TAG, i);
     audiofile = silence_train(i, :);
+    index = strfind(audiofile, 'v');
+    audiofile = audiofile(1:index);
     [sound_data, samp_freq] = audioread(audiofile, 'double');
     sound_data = sound_data(:, 1);
     %sound_data = sound_data(1:samp_freq/4);
@@ -63,6 +68,8 @@ end
 for i = 1:size(cry_train)
    fprintf('%s Feature Extraction in Cry File : %d\n', TAG, i);
    audiofile = cry_train(i,:);
+   index = strfind(audiofile, 'v');
+   audiofile = audiofile(1:index);
    [sound_data, samp_freq] = audioread(audiofile, 'double');
    sound_data = sound_data(:, 1); %only data in 1st column
    %sound_data = sound_data(1:samp_freq/4);
