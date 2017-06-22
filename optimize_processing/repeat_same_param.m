@@ -13,6 +13,7 @@ msre_train = [];
 msre_val = [];
 msre_test = [];
 percent_test = [];
+performance_test = [];
 epoch_vec = [];
 time_train_vec = [];
 time_feat_vec = [];
@@ -26,7 +27,7 @@ for j = 1:5
     time_feat = toc;
     hidden = floor(size(sound_train, 2)*hidden_node);
     tic
-    [net, tr, percentError] = nnet_simple(sound_train, final_output, hidden);
+    [net, tr, percentError, performance] = nnet_simple(sound_train, final_output, hidden);
     time_train = toc;
     
     epochs = tr.epoch(end);
@@ -58,6 +59,7 @@ for j = 1:5
     msre_val = [msre_val; msrev];
     msre_test = [msre_test; msretest];
     percent_test = [percent_test; percentError];
+    performance_test = [performance_test; performance];
     
     epoch_vec = [epoch_vec; epochs];
     time_feat_vec = [time_feat_vec; time_feat];
@@ -82,6 +84,7 @@ xlswrite('FinalResultSheets.xlsx', epoch_vec, sheet,strcat('M2:M', int2str(lengt
 xlswrite('FinalResultSheets.xlsx', time_feat_vec, sheet,strcat('N2:N', int2str(length(time_feat_vec)+1)));
 xlswrite('FinalResultSheets.xlsx', time_train_vec, sheet,strcat('O2:O', int2str(length(time_train_vec)+1)));
 xlswrite('FinalResultSheets.xlsx', percent_test, sheet,strcat('P2:P', int2str(length(percent_test)+1)));
+xlswrite('FinalResultSheets.xlsx', performance_test, sheet,strcat('Q2:Q', int2str(length(performance_test)+1)));
 %{
 mean_frame_length = mean(frame_len_vec);
 mean_frame_shift = mean(frame_shift_vec);
