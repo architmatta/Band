@@ -19,7 +19,7 @@ cry_out = [];
 tot_num_feat = floor((((3000-frame_length)/frame_shift) + 1))*N;
 
 %% ==========Part 1: Find Feature and visualize============
-for i = 1:600%size(horn_train)
+for i = 1:size(horn_train)
    fprintf('%sFeature Extraction in Horn File : %d\n', TAG, i);
    audiofile = horn_train(i,:);
    index = strfind(audiofile, 'v');

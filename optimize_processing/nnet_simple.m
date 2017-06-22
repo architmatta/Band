@@ -29,12 +29,13 @@ net.divideParam.testRatio = 15/100;
 net.divideFcn = 'dividerand';
 
 net.trainParam.lr = 0.0001;
-net.trainParam.showWindow = 0;
-%net.trainParam.min_grad = 1e-5;
-net.trainParam.goal = 0.1;
+%net.trainParam.showWindow = 0;
+net.trainParam.min_grad = 1e-12;
+net.trainParam.goal = 0.01;
+net.trainParam.max_fail = 6;
 
-load seed
-rng(seed)
+%load seed
+%rng(seed)
 net = configure(net,x,t);
 % Train the Network
 [net,tr] = train(net,x,t);
