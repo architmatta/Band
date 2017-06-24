@@ -19,16 +19,26 @@ time_train_vec = [];
 time_feat_vec = [];
 
 fprintf('%d, %d, %d, %f', frame_length, frame_shift, N, hidden_node);
-
-for j = 1
+j=1;
+while(j<=5)
     fprintf('%d iteration in %s\n', j, TAG);
+    j = j+1;
     tic
     [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
     time_feat = toc;
     hidden = floor(size(sound_train, 2)*hidden_node);
+    
     tic
     [net, tr, percentError, performance] = nnet_simple(sound_train, final_output, hidden);
     time_train = toc;
+    
+    valErr = tr.vperf(end);
+    valCheck = max(tr.val_fail);
+    %if(valCheck==6 || valErr >= 0.01)
+    %if(valCheck==6)
+     %   j = j-1;
+      %  continue;
+    %end
     
     epochs = tr.epoch(end);
     msret = tr.perf(end);
@@ -65,26 +75,25 @@ for j = 1
     time_feat_vec = [time_feat_vec; time_feat];
     time_train_vec = [time_train_vec; time_train];
 end
+xlswrite('ErrorCasesAnalysis.xlsx', frame_len_vec, sheet, strcat('A2:A', int2str(length(frame_len_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', frame_shift_vec, sheet,strcat('B2:B', int2str(length(frame_shift_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', alpha_vec, sheet,strcat('C2:C', int2str(length(alpha_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', M_vec, sheet,strcat('D2:D', int2str(length(M_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', N_vec, sheet,strcat('E2:E', int2str(length(N_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', L_vec, sheet,strcat('F2:F', int2str(length(L_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', num_input_vec, sheet,strcat('G2:G', int2str(length(num_input_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', num_hidden_vec, sheet,strcat('H2:H', int2str(length(num_hidden_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', num_output_vec, sheet,strcat('I2:I', int2str(length(num_output_vec)+1)));
 
-xlswrite('FinalResultSheets.xlsx', frame_len_vec, sheet, strcat('A2:A', int2str(length(frame_len_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', frame_shift_vec, sheet,strcat('B2:B', int2str(length(frame_shift_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', alpha_vec, sheet,strcat('C2:C', int2str(length(alpha_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', M_vec, sheet,strcat('D2:D', int2str(length(M_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', N_vec, sheet,strcat('E2:E', int2str(length(N_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', L_vec, sheet,strcat('F2:F', int2str(length(L_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', num_input_vec, sheet,strcat('G2:G', int2str(length(num_input_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', num_hidden_vec, sheet,strcat('H2:H', int2str(length(num_hidden_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', num_output_vec, sheet,strcat('I2:I', int2str(length(num_output_vec)+1)));
 
-
-xlswrite('FinalResultSheets.xlsx', msre_train, sheet,strcat('J2:J', int2str(length(msre_train)+1)));
-xlswrite('FinalResultSheets.xlsx', msre_val, sheet,strcat('K2:K', int2str(length(msre_val)+1)));
-xlswrite('FinalResultSheets.xlsx', msre_test, sheet,strcat('L2:L', int2str(length(msre_test)+1)));
-xlswrite('FinalResultSheets.xlsx', epoch_vec, sheet,strcat('M2:M', int2str(length(epoch_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', time_feat_vec, sheet,strcat('N2:N', int2str(length(time_feat_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', time_train_vec, sheet,strcat('O2:O', int2str(length(time_train_vec)+1)));
-xlswrite('FinalResultSheets.xlsx', percent_test, sheet,strcat('P2:P', int2str(length(percent_test)+1)));
-xlswrite('FinalResultSheets.xlsx', performance_test, sheet,strcat('Q2:Q', int2str(length(performance_test)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', msre_train, sheet,strcat('J2:J', int2str(length(msre_train)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', msre_val, sheet,strcat('K2:K', int2str(length(msre_val)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', msre_test, sheet,strcat('L2:L', int2str(length(msre_test)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', epoch_vec, sheet,strcat('M2:M', int2str(length(epoch_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', time_feat_vec, sheet,strcat('N2:N', int2str(length(time_feat_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', time_train_vec, sheet,strcat('O2:O', int2str(length(time_train_vec)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', percent_test, sheet,strcat('P2:P', int2str(length(percent_test)+1)));
+xlswrite('ErrorCasesAnalysis.xlsx', performance_test, sheet,strcat('Q2:Q', int2str(length(performance_test)+1)));
 %{
 mean_frame_length = mean(frame_len_vec);
 mean_frame_shift = mean(frame_shift_vec);
