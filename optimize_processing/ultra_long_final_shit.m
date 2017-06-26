@@ -5,34 +5,39 @@ clear all; clc;
 alpha = 0.97;
 window = @hanning;
 R = [300 5000]; %frequency range
-M = 26; % number of filterbank channels
+%M = 26; % number of filterbank channels
 %N = 20; % number of mfcc
 L = 22; % liftering coefficient
 
 set_frame_length = [50; 100; 150; 220; 250];
 set_frame_shift = [0.25; 0.50; 0.75; 1.0];
 set_mfcc = [5; 8; 10; 12; 15; 18; 20];
+set_FilterBank = [5; 8; 10; 12; 15; 18; 20; 26];
 set_hidden_node = [0.1; 0.25; 0.50; 0.75; 1.0];
+
 %fprintf('%d, %d, %d, %f', frame_length, frame_shift, N, hidden_node);
-for i = 1:length(set_frame_length)
+    %for i = 1:length(set_frame_length)
+     %   for j = 1:length(set_frame_shift)
+      %      for k = 1:length(set_mfcc)
+       %         for l = 1:length(set_hidden_node)
+for i = 1
     frame_length = set_frame_length(i);
     for j = 3
         frame_shift = floor(set_frame_shift(j)*frame_length);
-        for k = 2
-            N = set_mfcc(k);
-            TAG = strcat(int2str(i), int2str(j), int2str(k));
-            tic
-            [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
-            time_feat = toc;
-            for l = 3
-%for i = 1:length(set_frame_length)
- %   for j = 1:length(set_frame_shift)
-  %      for k = 1:length(set_mfcc)
-   %         for l = 1:length(set_hidden_node)
-                hidden_node = set_hidden_node(l);
-                sheet = strcat('FinalSheets', int2str(i), int2str(j), int2str(k), int2str(l));
-                TAG = strcat(int2str(i), int2str(j), int2str(k), int2str(l));
-                repeat_same_param(sound_train, final_output, frame_length, frame_shift, alpha, window, R, M, N, L, time_feat, sheet, hidden_node, TAG);
+        for f = 1:length(set_FilterBank)
+            M = set_FilterBank(f);
+            for k = 2
+                N = set_mfcc(k);
+                TAG = strcat(int2str(i), int2str(j), int2str(k));
+                tic
+                [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
+                time_feat = toc;
+                for l = 3
+                    hidden_node = set_hidden_node(l);
+                    sheet = strcat('FinalSheets', int2str(i), int2str(j), int2str(f), int2str(k), int2str(l));
+                    TAG = strcat(int2str(i), int2str(j), int2str(f), int2str(k), int2str(l));
+                    repeat_same_param(sound_train, final_output, frame_length, frame_shift, alpha, window, R, M, N, L, time_feat, sheet, hidden_node, TAG);
+                end
             end
         end
     end
