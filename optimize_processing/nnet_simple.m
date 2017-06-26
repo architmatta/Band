@@ -26,7 +26,7 @@ net.divideParam.trainRatio = 70/100;
 net.divideParam.valRatio = 15/100;
 net.divideParam.testRatio = 15/100;
 
-%load('trainIndFull.mat'); load('testIndFull.mat'); load('valIndFull.mat');
+%load('trainInd.mat'); load('testInd.mat'); load('valInd.mat');
 %load('trainIndFull.mat'); load('testIndFull.mat'); load('valIndFull.mat');
 %net.divideFcn = 'divideind';
 net.divideFcn = 'dividerand';
@@ -43,6 +43,12 @@ net.trainParam.lr = 0.0001;
 net.trainParam.min_grad = 1e-6;
 %net.trainParam.goal = 0.001;
 net.trainParam.max_fail = 6;
+
+%Performance is always cross entropy
+%net.performFcn = 'crossentropy';
+%net.performParam.regularization = 0.1;
+%net.performParam.normalization = 'none';
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %load('seed.mat')
 %rng(seed)

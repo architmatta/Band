@@ -14,17 +14,16 @@ set_frame_shift = [0.25; 0.50; 0.75; 1.0];
 set_mfcc = [5; 8; 10; 12; 15; 18; 20];
 set_hidden_node = [0.1; 0.25; 0.50; 0.75; 1.0];
 %fprintf('%d, %d, %d, %f', frame_length, frame_shift, N, hidden_node);
-for i = 1:length(set_frame_length)
+for i = 1
     frame_length = set_frame_length(i);
-    for j = 3
+    for j = 1
         frame_shift = floor(set_frame_shift(j)*frame_length);
         for k = 2
             N = set_mfcc(k);
-            TAG = strcat(int2str(i), int2str(j), int2str(k));
             tic
             [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
             time_feat = toc;
-            for l = 3
+            for l = 1:length(set_hidden_node)
 %for i = 1:length(set_frame_length)
  %   for j = 1:length(set_frame_shift)
   %      for k = 1:length(set_mfcc)
@@ -32,7 +31,7 @@ for i = 1:length(set_frame_length)
                 hidden_node = set_hidden_node(l);
                 sheet = strcat('FinalSheets', int2str(i), int2str(j), int2str(k), int2str(l));
                 TAG = strcat(int2str(i), int2str(j), int2str(k), int2str(l));
-                repeat_same_param(sound_train, final_output, frame_length, frame_shift, alpha, window, R, M, N, L, time_feat, sheet, hidden_node, TAG);
+                repeat_same_param(sound_train, final_output, sheet, hidden_node, TAG);
             end
         end
     end

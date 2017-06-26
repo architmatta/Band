@@ -1,4 +1,4 @@
-function[] = repeat_same_param(frame_length, frame_shift, alpha, window, R, M, N, L, sheet, hidden_node, TAG)
+function[] = repeat_same_param(sound_train, final_output, frame_length, frame_shift, alpha, window, R, M, N, L, time_feat, sheet, hidden_node, TAG)
 
 frame_len_vec = [];
 frame_shift_vec = [];
@@ -18,15 +18,16 @@ epoch_vec = [];
 time_train_vec = [];
 time_feat_vec = [];
 
-fprintf('%d, %d, %d, %f', frame_length, frame_shift, N, hidden_node);
+hidden = floor(size(sound_train, 2)*hidden_node);
+
 j=1;
-while(j<=5)
+while(j<=20)
     fprintf('%d iteration in %s\n', j, TAG);
     j = j+1;
-    tic
-    [sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
-    time_feat = toc;
-    hidden = floor(size(sound_train, 2)*hidden_node);
+    %tic
+    %[sound_train, final_output] = main(frame_length, frame_shift, alpha, window, R, M, N, L, TAG);
+    %time_feat = toc;
+    %hidden = floor(size(sound_train, 2)*hidden_node);
     
     tic
     [net, tr, percentError, performance] = nnet_simple(sound_train, final_output, hidden);
